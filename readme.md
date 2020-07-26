@@ -2,6 +2,8 @@
 
 ![image](./assets/task5-schema.png)
 
+При регистрации пользователя (/register), сервис AUTH создает пользователя в локальной базе и отправляет REST запрос на создание пользователя(с указанным username) в БД сервиса APP.
+
 # Deploy
 namespace auth
 
