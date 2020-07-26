@@ -1,0 +1,65 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-postgres
+  labels:
+    app: auth-postgres
+spec:
+  type: NodePort
+  ports:
+    - port: 5432
+  selector:
+    app: auth-postgres
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: auth-postgres-statefulset
+spec:
+  serviceName: "auth-postgres"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: auth-postgres
+  template:
+    metadata:
+      labels:
+        app: auth-postgres
+    spec:
+      containers:
+        - name: auth-postgres
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+              name: postgredb
+          env:
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-task5-config
+                  key: AUTH_DATABASE_DB
+            - name: POSTGRES_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-task5-config
+                  key: AUTH_DATABASE_USER
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-task5-secret
+                  key: AUTH_DATABASE_PASSWORD_WITH_NEW_LINE
+          volumeMounts:
+            - name: postgredb
+              mountPath: /var/lib/postgresql/data
+              subPath: auth-postgres
+  volumeClaimTemplates:
+    - metadata:
+        name: postgredb
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        storageClassName: standard
+        resources:
+          requests:
+            storage: 1Gi

@@ -1,0 +1,52 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: auth-task5-initdb
+spec:
+  template:
+    metadata:
+      name: auth-task5-initdb
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: auth-post-install-job
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-task5-config
+                  key: AUTH_DATABASE_HOST
+            - name: DATABASE_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-task5-config
+                  key: AUTH_DATABASE_DB
+            - name: DATABASE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: auth-task5-config
+                  key: AUTH_DATABASE_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: auth-task5-secret
+                  key: AUTH_DATABASE_PASSWORD
+          image: postgres:latest
+          command:
+            - sh
+            - "-c"
+            - |
+              until pg_isready -h $DATABASE_HOST;
+                do echo waiting for database; sleep 2;
+              done;
+              psql postgresql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST/$DATABASE_DB <<'EOF'
+              create table auth_user
+              (
+                  id bigserial not null
+                     constraint auth_user_pk
+                     primary key,
+                  username varchar(256),
+                  password varchar(256)
+              );
+              EOF
+  backoffLimit: 0

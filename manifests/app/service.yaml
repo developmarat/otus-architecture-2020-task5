@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: app-task5-service
+  labels:
+    app: app-task5-app
+spec:
+  selector:
+    app: app-task5-app
+  ports:
+    - name: web
+      protocol: TCP
+      port: 9000
+      targetPort: web
+  type: NodePort

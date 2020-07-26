@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: app-task5-config
+data:
+  APP_DATABASE_HOST: app-postgres
+  APP_DATABASE_USER: myuser
+  APP_DATABASE_DB: myapp
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: app-task5-secret
+type: Opaque
+data:
+  APP_DATABASE_PASSWORD: cGFzc3dk
+  APP_DATABASE_PASSWORD_WITH_NEW_LINE: cGFzc3dkCg==

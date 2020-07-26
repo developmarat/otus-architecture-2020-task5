@@ -1,0 +1,57 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-task5-deployment
+  labels:
+    app: app-task5-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: app-task5-app
+  template:
+    metadata:
+      labels:
+        app: app-task5-app
+    spec:
+      containers:
+        - name: app-task5
+          image: developmarat/task5.app:v3
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-task5-config
+                  key: APP_DATABASE_HOST
+            - name: DATABASE_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: app-task5-config
+                  key: APP_DATABASE_DB
+            - name: DATABASE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-task5-config
+                  key: APP_DATABASE_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-task5-secret
+                  key: APP_DATABASE_PASSWORD
+          ports:
+            - name: web
+              containerPort: 8000
+          livenessProbe:
+            httpGet:
+              port: 8000
+              path: /health
+            initialDelaySeconds: 135
+            periodSeconds: 5
+            timeoutSeconds: 2
+          readinessProbe:
+            httpGet:
+              port: 8000
+              path: /health
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            failureThreshold: 20

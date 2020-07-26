@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: app-task5-initdb
+spec:
+  template:
+    metadata:
+      name: app-task5-initdb
+    spec:
+      restartPolicy: Never
+      containers:
+        - name: app-post-install-job
+          env:
+            - name: DATABASE_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: app-task5-config
+                  key: APP_DATABASE_HOST
+            - name: DATABASE_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: app-task5-config
+                  key: APP_DATABASE_DB
+            - name: DATABASE_USER
+              valueFrom:
+                configMapKeyRef:
+                  name: app-task5-config
+                  key: APP_DATABASE_USER
+            - name: DATABASE_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: app-task5-secret
+                  key: APP_DATABASE_PASSWORD
+          image: postgres:latest
+          command:
+            - sh
+            - "-c"
+            - |
+              until pg_isready -h $DATABASE_HOST;
+                do echo waiting for database; sleep 2;
+              done;
+              psql postgresql://$DATABASE_USER:$DATABASE_PASSWORD@$DATABASE_HOST/$DATABASE_DB <<'EOF'
+              create table app_user
+              (
+                  id bigserial not null
+                    constraint user_pk
+                    primary key,
+                  username   varchar(256),
+                  first_name varchar(256),
+                  last_name  varchar(256),
+                  email      varchar(256),
+                  phone      varchar(256)
+              );
+              EOF
+  backoffLimit: 0

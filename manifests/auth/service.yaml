@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: auth-task5-service
+  labels:
+    app: auth-task5-app
+spec:
+  selector:
+    app: auth-task5-app
+  ports:
+    - name: web
+      protocol: TCP
+      port: 9000
+      targetPort: web
+  type: NodePort

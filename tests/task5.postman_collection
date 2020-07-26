@@ -1,0 +1,526 @@
+{
+	"info": {
+		"_postman_id": "8e67c1b8-389f-458b-9108-bb684db8e04c",
+		"name": "task5",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "86d3e01c-6507-40c4-afdb-2bc4ef4eccfe",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "32ba45c8-c15c-4c5c-bc9d-ed96d72351f3",
+						"exec": [
+							"pm.collectionVariables.set(\"username\", pm.variables.replaceIn('{{$randomUserName}}'))",
+							"pm.collectionVariables.set(\"password\", pm.variables.replaceIn('{{$randomPassword}}'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try get user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "0a4bd49e-a66d-413a-b3c9-63acf511af13",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/otusapp/me",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"otusapp",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Try update user 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "e98f3e9d-6263-4bda-96e1-75508d20ed6d",
+						"exec": [
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'))",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'))",
+							"pm.collectionVariables.set(\"email\", pm.variables.replaceIn('{{$randomEmail}}'))",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'))"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "1c59463b-9142-4eec-8076-a52cf2cda014",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{firstName}}\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"phone\": \"{{phone}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/otusapp/me",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"otusapp",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "2c0af001-615a-44b3-8ada-4cef9816d07c",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update user 1",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "9de18cc4-ba3b-46cf-8244-29a1aba9d1ee",
+						"exec": [
+							"pm.collectionVariables.set(\"firstName\", pm.variables.replaceIn('{{$randomFirstName}}'))",
+							"pm.collectionVariables.set(\"lastName\", pm.variables.replaceIn('{{$randomLastName}}'))",
+							"pm.collectionVariables.set(\"email\", pm.variables.replaceIn('{{$randomEmail}}'))",
+							"pm.collectionVariables.set(\"phone\", pm.variables.replaceIn('{{$randomPhoneNumber}}'))"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "test",
+					"script": {
+						"id": "df62bc36-1a14-4675-b062-12b72b1ef27c",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"firstName\": \"{{firstName}}\",\r\n    \"lastName\": \"{{lastName}}\",\r\n    \"email\": \"{{email}}\",\r\n    \"phone\": \"{{phone}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/otusapp/me",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"otusapp",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "69ef8601-4798-410a-9266-c1a2d6872046",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/otusapp/me",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"otusapp",
+						"me"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout user 1",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "921a36a3-ea82-4b74-8011-f988f5abf80b",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/logout",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Register user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6a99edc1-1fe2-4d2f-b6bb-d2fe4224a020",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "06be0f58-083f-4a85-a937-5f3dc5e1af2c",
+						"exec": [
+							"pm.collectionVariables.set(\"username\", pm.variables.replaceIn('{{$randomUserName}}'))",
+							"pm.collectionVariables.set(\"password\", pm.variables.replaceIn('{{$randomPassword}}'))"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/register",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "abd84476-6e34-4c65-88c0-31bed9666302",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true\r",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"username\": \"{{username}}\",\r\n    \"password\" : \"{{password}}\"\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/login",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get user 2",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "17497ee4-8547-4c6f-8395-1122e2c8af6b",
+						"exec": [
+							"tests[\"[INFO] Request: \" + (('data' in request) ? request['data'] : '') ] = true",
+							"tests[\"[INFO] Response: \" + responseBody] = true"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{BASE_URL}}/otusapp/me",
+					"host": [
+						"{{BASE_URL}}"
+					],
+					"path": [
+						"otusapp",
+						"me"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "e711d748-4342-46a8-8bc3-8b5badb0dade",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "19caf094-22c0-4125-8758-ab8d1a5ad6ad",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"id": "8f93eb20-91ed-47c9-9126-fb3d563f26db",
+			"key": "BASE_URL",
+			"value": "arch.homework"
+		},
+		{
+			"id": "dcba7996-c123-4018-9bae-64da00e101e9",
+			"key": "userId",
+			"value": ""
+		},
+		{
+			"id": "c6c9a9ac-7a60-4e51-86ad-4294f8a7e8d2",
+			"key": "password",
+			"value": ""
+		},
+		{
+			"id": "bf4d0c76-739c-41dc-9eaf-407ca20f7dc3",
+			"key": "username",
+			"value": ""
+		},
+		{
+			"id": "2ad6e632-552c-42c0-ae17-3407058b1fe5",
+			"key": "email",
+			"value": ""
+		},
+		{
+			"id": "211d6035-ecb7-4468-986b-0c2ff0c8776b",
+			"key": "firstName",
+			"value": ""
+		},
+		{
+			"id": "9e884bfb-c469-4be5-9916-602dcf7259c2",
+			"key": "lastName",
+			"value": ""
+		},
+		{
+			"id": "db1d8bf6-8d85-4e4a-851d-1a7fe04dbed3",
+			"key": "phone",
+			"value": ""
+		}
+	],
+	"protocolProfileBehavior": {}
+}
